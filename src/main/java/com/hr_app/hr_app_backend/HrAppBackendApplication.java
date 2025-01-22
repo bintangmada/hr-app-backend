@@ -8,6 +8,7 @@ public class HrAppBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HrAppBackendApplication.class, args);
+		System.out.println("\n===SERVER BACKEND IS RUNNING===");
 	}
 
 }
