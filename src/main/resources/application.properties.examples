@@ -1,0 +1,18 @@
+# DELETE DOT EXAMPLES FROM application.properties.examples
+# application.properties.examples will be application.properties
+
+spring.application.name=hr-app-backend
+
+server.port = 1945
+server.servlet.context-path=/api
+
+# DB Connection
+spring.datasource.url=jdbc:mysql://localhost:3306/your_schema_name
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+spring.datasource.username= your_db_username
+spring.datasource.password= your_db_password
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+
+
