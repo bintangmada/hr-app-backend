@@ -2,6 +2,8 @@ package com.hr_app.hr_app_backend.service.impl;
 
 import com.hr_app.hr_app_backend.entity.Region;
 import com.hr_app.hr_app_backend.payload.RegionDto;
+import com.hr_app.hr_app_backend.payload.request.RegionDtoRequest;
+import com.hr_app.hr_app_backend.payload.response.ApiResponse;
 import com.hr_app.hr_app_backend.repository.RegionRepository;
 import com.hr_app.hr_app_backend.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +22,30 @@ public class RegionServiceImpl implements RegionService {
         this.regionRepository = regionRepository;
     }
 
-    public RegionDto createOneRegion(RegionDto regionDto){
-        Region regionEntity = mapToEntity(regionDto);
+    public ApiResponse<RegionDtoRequest> createOneRegion(RegionDtoRequest regionDtoRequest){
+
+        Region existingRegion = regionRepository.findRegionByRegionName(regionDtoRequest.getRegionName());
+        ApiResponse apiResponse = new ApiResponse();
+
+        if(existingRegion != null){
+            apiResponse.setStatus(false);
+            apiResponse.setMessage("Region dengan nama : "+regionDtoRequest.getRegionName()+" sudah ada di database");
+            apiResponse.setData(null);
+            return apiResponse;
+        }
+
+        Region regionEntity = mapRegionRequestToRegionEntity(regionDtoRequest);
         Region savedRegionEntity = regionRepository.save(regionEntity);
-        RegionDto regionDtoResponse = mapToDto(savedRegionEntity);
-        return regionDtoResponse;
+        RegionDtoRequest regionDtoRequestt = mapRegionEntityToRegionDtoRequest(savedRegionEntity);
+        apiResponse.setStatus(true);
+        apiResponse.setMessage("Region dengan nama : "+regionDtoRequest.getRegionName()+" berhasil dibuat");
+        apiResponse.setData(regionDtoRequestt);
+
+        return apiResponse;
     }
 
     public List<RegionDto> getAllRegions(){
-        List<RegionDto> listRegionDto = new ArrayList<>();
-        for(Region regionEntity : regionRepository.findAll()){
-            RegionDto regionDto = mapToDto(regionEntity);
-            listRegionDto.add(regionDto);
-        }
-        return listRegionDto;
+        return null;
     }
 
     public RegionDto getOneRegion(int regionId){
@@ -48,19 +60,18 @@ public class RegionServiceImpl implements RegionService {
 
     }
 
-    // Mapping RegionDto to RegionEntity
-    public Region mapToEntity(RegionDto regionDto){
+    // Map region dto request to region entity
+    Region mapRegionRequestToRegionEntity(RegionDtoRequest regionDtoRequest){
         Region regionEntity = new Region();
-        regionEntity.setRegionName(regionDto.getRegionName());
+        regionEntity.setRegionName(regionDtoRequest.getRegionName());
         return regionEntity;
     }
 
-    // Mapping RegionEntity to RegionDto
-    public RegionDto mapToDto(Region region){
-        RegionDto regionDto = new RegionDto();
-        regionDto.setRegionId(region.getRegionId());
-        regionDto.setRegionName(region.getRegionName());
-        return regionDto;
+    // Map region dto entity to region dto request
+    RegionDtoRequest mapRegionEntityToRegionDtoRequest(Region regionEntity){
+        RegionDtoRequest regionDtoRequest = new RegionDtoRequest();
+        regionDtoRequest.setRegionId(regionEntity.getRegionId());
+        regionDtoRequest.setRegionName(regionEntity.getRegionName());
+        return regionDtoRequest;
     }
-
 }
