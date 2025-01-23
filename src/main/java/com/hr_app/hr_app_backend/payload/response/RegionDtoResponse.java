@@ -1,20 +1,14 @@
-package com.hr_app.hr_app_backend.payload;
+package com.hr_app.hr_app_backend.payload.response;
+
+import com.hr_app.hr_app_backend.payload.CountryDto;
 
 import java.util.List;
 
-public class RegionDto {
+public class RegionDtoResponse {
+
     private int regionId;
     private String regionName;
     private List<CountryDto> countryDtos;
-
-    public RegionDto() {
-    }
-
-    public RegionDto(int regionId, String regionName, List<CountryDto> countryDtos) {
-        this.regionId = regionId;
-        this.regionName = regionName;
-        this.countryDtos = countryDtos;
-    }
 
     public int getRegionId() {
         return regionId;

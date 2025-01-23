@@ -1,8 +1,12 @@
 package com.hr_app.hr_app_backend.controller;
 
 import com.hr_app.hr_app_backend.payload.RegionDto;
+import com.hr_app.hr_app_backend.payload.request.RegionDtoRequest;
+import com.hr_app.hr_app_backend.payload.response.ApiResponse;
 import com.hr_app.hr_app_backend.service.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +23,9 @@ public class RegionController {
     }
 
     @PostMapping()
-    public RegionDto createOneRegion(@RequestBody RegionDto regionDto){
-        return regionService.createOneRegion(regionDto);
+    public ResponseEntity<ApiResponse<RegionDtoRequest>> createOneRegion(@RequestBody RegionDtoRequest regionDtoRequest){
+        ApiResponse<RegionDtoRequest> regionCreated = regionService.createOneRegion(regionDtoRequest);
+        return new ResponseEntity<>(regionCreated, HttpStatus.CREATED);
     }
 
     @GetMapping()
