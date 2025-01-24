@@ -9,10 +9,9 @@ import java.util.List;
 public interface RegionService {
 
     ApiResponse<RegionDtoRequest> createOneRegion(RegionDtoRequest regionDtoRequest);
+    List<RegionDto> getAllRegions();
 
     RegionDto getOneRegion(int regionId);
-
-    List<RegionDto> getAllRegions();
 
     RegionDto updateOneRegion(int regionId, RegionDto regionDto);
 
