@@ -2,4 +2,4 @@
 
 Sistem untuk mengelola sumber daya manusia
 
-/Users/bintangsuharsono/Documents/BINTANG MADA LAPTOP M3/PROJECT/HR_SCHEMA/HR-SCHEMA-V2.png
+![Image](https://github.com/user-attachments/assets/4b05f0fe-cd3c-4b9b-8d95-1897224153c5)
