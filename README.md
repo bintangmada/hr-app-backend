@@ -2,4 +2,4 @@
 
 Sistem untuk mengelola sumber daya manusia
 
-![Image](https://github.com/user-attachments/assets/4b05f0fe-cd3c-4b9b-8d95-1897224153c5)
+![Image](https://github.com/user-attachments/assets/96cc6c8a-88cc-42f6-9e5c-0d048d5cba8b)
