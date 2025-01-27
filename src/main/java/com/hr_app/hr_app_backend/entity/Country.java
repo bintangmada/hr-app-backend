@@ -2,6 +2,8 @@ package com.hr_app.hr_app_backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "countries")
 public class Country {
@@ -16,9 +18,14 @@ public class Country {
     @Column(name = "country_name", length = 100, nullable = false)
     private String countryName;
 
+    // RELATION TO REGION
     @ManyToOne
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;
+
+    // RELATION TO LOCATION
+    @OneToMany(mappedBy = "country")
+    private List<Location> locations;
 
     public Country() {
     }

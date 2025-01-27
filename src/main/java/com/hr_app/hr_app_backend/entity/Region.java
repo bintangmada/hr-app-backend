@@ -15,6 +15,7 @@ public class Region {
     @Column(name = "region_name", length = 30, nullable = false)
     private String regionName;
 
+    // RELATION TO COUNTRY
     @OneToMany(mappedBy = "region")
     private List<Country> countries;
 
