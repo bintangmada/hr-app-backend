@@ -2,6 +2,8 @@ package com.hr_app.hr_app_backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "departments")
 public class Department {
@@ -17,6 +19,9 @@ public class Department {
     @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
+
+    @OneToMany(mappedBy = "department")
+    private List<Employee> employee;
 
 
 }

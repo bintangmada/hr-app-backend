@@ -31,8 +31,16 @@ public class Employee {
     private Double commissionPct;
 
     // RELATION TO JOB
+    @ManyToOne
+    @JoinColumn(name = "job_id")
+    private Job job;
+
     // RELATION TO MANAGER (SELF JOIN)
+
     // RELATION TO DEPARTMENT
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     // RELATION TO USER
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")

@@ -2,6 +2,8 @@ package com.hr_app.hr_app_backend.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "jobs")
 public class Job {
@@ -21,4 +23,7 @@ public class Job {
 
     @Column(name = "max_salary")
     private Double maxSalary;
+
+    @OneToMany(mappedBy = "job")
+    private List<Employee> employees;
 }
