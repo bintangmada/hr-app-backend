@@ -20,6 +20,14 @@ public class Privilege {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Role> roles;
 
+    public Privilege() {
+    }
+
+    public Privilege(String name, List<Role> roles) {
+        this.name = name;
+        this.roles = roles;
+    }
+
     public int getId() {
         return id;
     }
