@@ -10,5 +10,6 @@ public class Configuration {
     public ModelMapper modelMapper(){
         return new ModelMapper();
         // test commit
+        // test commit 2
     }
 }
