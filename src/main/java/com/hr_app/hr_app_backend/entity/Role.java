@@ -28,6 +28,16 @@ public class Role {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<User> users;
 
+    public Role(){
+
+    }
+
+    public Role(String name, List<Privilege> privileges, List<User> users) {
+        this.name = name;
+        this.privileges = privileges;
+        this.users = users;
+    }
+
     public int getId() {
         return id;
     }
