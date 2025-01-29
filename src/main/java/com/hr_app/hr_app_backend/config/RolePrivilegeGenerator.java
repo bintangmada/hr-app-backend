@@ -68,11 +68,44 @@ public class RolePrivilegeGenerator implements CommandLineRunner {
             privilegeRepository.saveAll(listPrivilege);
         }
 
+        // ADMIN
+        if (countByRoleIdAndPrivilegeId(1, 1) == 0) {
+            privilegeRepository.insertRolePrivilege(1, 1);
+        }
+        if (countByRoleIdAndPrivilegeId(1, 2) == 0) {
+            privilegeRepository.insertRolePrivilege(1, 2);
+        }
+        if (countByRoleIdAndPrivilegeId(1, 3) == 0) {
+            privilegeRepository.insertRolePrivilege(1, 3);
+        }
+        if (countByRoleIdAndPrivilegeId(1, 4) == 0) {
+            privilegeRepository.insertRolePrivilege(1, 4);
+        }
+
+        // EMPLOYEE
+        if (countByRoleIdAndPrivilegeId(2, 5) == 0) {
+            privilegeRepository.insertRolePrivilege(2, 5);
+        }
+        if (countByRoleIdAndPrivilegeId(2, 6) == 0) {
+            privilegeRepository.insertRolePrivilege(2, 6);
+        }
+        if (countByRoleIdAndPrivilegeId(2, 7) == 0) {
+            privilegeRepository.insertRolePrivilege(2, 7);
+        }
+        if (countByRoleIdAndPrivilegeId(2, 8) == 0) {
+            privilegeRepository.insertRolePrivilege(2, 8);
+        }
+
     }
     private void addPrivilegeIfNotExists(List<Privilege> listPrivilege, String privilegeName){
         if(!privilegeRepository.existsByName(privilegeName)){
             Privilege privilege = new Privilege(privilegeName, null);
             listPrivilege.add(privilege);
         }
+    }
+
+    private Integer countByRoleIdAndPrivilegeId(Integer roleId, Integer privilegeId) {
+        // Implementasi countByRoleIdAndPrivilegeId yang sesuai
+        return privilegeRepository.countByRoleIdAndPrivilegeId(roleId, privilegeId);
     }
 }
