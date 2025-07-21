@@ -12,10 +12,10 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
 
-    @Column(name = "first_name", length = 20, nullable = false)
+    @Column(name = "first_name", length = 100, nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", length = 20, nullable = false)
+    @Column(name = "last_name", length = 100, nullable = false)
     private String last_name;
 
     @Column(name = "phone_number", length = 12, nullable = false)
@@ -24,28 +24,36 @@ public class Employee {
     @Column(name = "hire_date", nullable = true)
     private Date hireDate;
 
+    @Column(name = "job_id", nullable = true)
+    private Long jobId;
+
     @Column(name = "salary", nullable = true)
     private Double salary;
 
     @Column(name = "commission_pct", nullable = true)
     private Double commissionPct;
 
-    // RELATION TO JOB
-    @ManyToOne
-    @JoinColumn(name = "job_id")
-    private Job job;
+    @Column(name = "manager_id", nullable = true)
+    private Long managerId;
 
-    // RELATION TO MANAGER (SELF JOIN)
+    @Column(name = "department_id", nullable = false)
+    private Long departmentId;
 
-    // RELATION TO DEPARTMENT
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "department_id")
-    private Department department;
+    public Employee(Long employeeId, String firstName, String last_name, String phoneNumber, Date hireDate, Long jobId, Double salary, Double commissionPct, Long managerId, Long departmentId) {
+        this.employeeId = employeeId;
+        this.firstName = firstName;
+        this.last_name = last_name;
+        this.phoneNumber = phoneNumber;
+        this.hireDate = hireDate;
+        this.jobId = jobId;
+        this.salary = salary;
+        this.commissionPct = commissionPct;
+        this.managerId = managerId;
+        this.departmentId = departmentId;
+    }
 
-    // RELATION TO USER
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
-    @PrimaryKeyJoinColumn
-    private User user;
+    public Employee() {
+    }
 
     public Long getEmployeeId() {
         return employeeId;
@@ -87,6 +95,14 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
+    public Long getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
+    }
+
     public Double getSalary() {
         return salary;
     }
@@ -103,11 +119,19 @@ public class Employee {
         this.commissionPct = commissionPct;
     }
 
-    public User getUser() {
-        return user;
+    public Long getManagerId() {
+        return managerId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setManagerId(Long managerId) {
+        this.managerId = managerId;
+    }
+
+    public Long getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Long departmentId) {
+        this.departmentId = departmentId;
     }
 }
