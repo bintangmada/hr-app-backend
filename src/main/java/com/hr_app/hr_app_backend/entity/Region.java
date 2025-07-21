@@ -15,17 +15,12 @@ public class Region {
     @Column(name = "region_name", length = 30, nullable = false)
     private String regionName;
 
-    // RELATION TO COUNTRY
-    @OneToMany(mappedBy = "region")
-    private List<Country> countries;
-
-    public Region() {
-    }
-
-    public Region(int regionId, String regionName, List<Country> countries) {
+    public Region(int regionId, String regionName) {
         this.regionId = regionId;
         this.regionName = regionName;
-        this.countries = countries;
+    }
+
+    public Region() {
     }
 
     public int getRegionId() {
@@ -42,13 +37,5 @@ public class Region {
 
     public void setRegionName(String regionName) {
         this.regionName = regionName;
-    }
-
-    public List<Country> getCountries() {
-        return countries;
-    }
-
-    public void setCountries(List<Country> countries) {
-        this.countries = countries;
     }
 }
