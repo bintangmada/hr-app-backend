@@ -18,23 +18,25 @@ public class Country {
     @Column(name = "country_name", length = 100, nullable = false)
     private String countryName;
 
-    // RELATION TO REGION
-    @ManyToOne
-    @JoinColumn(name = "region_id", nullable = false)
-    private Region region;
-
-    // RELATION TO LOCATION
-    @OneToMany(mappedBy = "country")
-    private List<Location> locations;
-
     public Country() {
     }
 
-    public Country(Long rowId, String countryId, String countryName, Region region) {
+    public Country(Long rowId, String countryId, String countryName, Long regionId) {
         this.rowId = rowId;
         this.countryId = countryId;
         this.countryName = countryName;
-        this.region = region;
+        this.regionId = regionId;
+    }
+
+    @Column(name = "region_id", nullable = false)
+    private Long regionId;
+
+    public Long getRowId() {
+        return rowId;
+    }
+
+    public void setRowId(Long rowId) {
+        this.rowId = rowId;
     }
 
     public String getCountryId() {
@@ -53,20 +55,11 @@ public class Country {
         this.countryName = countryName;
     }
 
-    public Region getRegion() {
-        return region;
+    public Long getRegionId() {
+        return regionId;
     }
 
-    public void setRegion(Region region) {
-        this.region = region;
+    public void setRegionId(Long regionId) {
+        this.regionId = regionId;
     }
-
-    public Long getRowId() {
-        return rowId;
-    }
-
-    public void setRowId(Long rowId) {
-        this.rowId = rowId;
-    }
-
 }
