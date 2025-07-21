@@ -11,31 +11,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
     @Column(unique = true)
     private String username;
+    @Column(name = "password")
     private String password;
     @Column(unique = true)
     private String email;
+    @Column(name = "is_enabled")
+    private boolean isEnabled;
+    @Column(name = "tokenId")
+    private Long tokenId;
 
-    private boolean isEnabled = false;
+    public User(Long userId, String username, String password, String email, boolean isEnabled, Long tokenId) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.isEnabled = isEnabled;
+        this.tokenId = tokenId;
+    }
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @Column(nullable = false)
-    private List<ConfirmationToken> confirmationTokens;
+    public User() {
+    }
 
     public Long getUserId() {
         return userId;
@@ -69,35 +66,19 @@ public class User {
         this.email = email;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<ConfirmationToken> getConfirmationTokens() {
-        return confirmationTokens;
-    }
-
-    public void setConfirmationTokens(List<ConfirmationToken> confirmationTokens) {
-        this.confirmationTokens = confirmationTokens;
-    }
-
     public boolean isEnabled() {
         return isEnabled;
     }
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public Long getTokenId() {
+        return tokenId;
+    }
+
+    public void setTokenId(Long tokenId) {
+        this.tokenId = tokenId;
     }
 }
