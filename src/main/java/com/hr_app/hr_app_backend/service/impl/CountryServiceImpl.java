@@ -36,6 +36,16 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public List<CountryDto> getAllCountries() {
+        List<Country> listCountries = countryRepository.findAll();
+//        Region region = regionRepository.findById()
+//        List<CountryDto> listCountryDto = listCountries
+//                .stream()
+//                .map(country -> {
+//                    CountryDto countryDto = new CountryDto();
+//                    countryDto.setCountryId(country.getCountryId());
+//                    countryDto.setCountryName(country.getCountryName());
+//
+//                })
         return null;
     }
 
