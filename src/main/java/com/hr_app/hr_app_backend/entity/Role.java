@@ -11,39 +11,25 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int roleId;
 
     @Column(nullable = false, length = 50)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "role_privilege",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "privilege_id")
-    )
-    private List<Privilege> privileges;
-
-    @ManyToMany(mappedBy = "roles")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<User> users;
-
-    public Role(){
-
+    public Role() {
     }
 
-    public Role(String name, List<Privilege> privileges, List<User> users) {
+    public Role(int roleId, String name) {
+        this.roleId = roleId;
         this.name = name;
-        this.privileges = privileges;
-        this.users = users;
     }
 
-    public int getId() {
-        return id;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     public String getName() {
@@ -52,21 +38,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Privilege> getPrivileges() {
-        return privileges;
-    }
-
-    public void setPrivileges(List<Privilege> privileges) {
-        this.privileges = privileges;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 }
