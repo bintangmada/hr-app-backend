@@ -11,29 +11,25 @@ public class Privilege {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int privilegeId;
 
     @Column(nullable = false, length = 50)
     private String name;
 
-    @ManyToMany(mappedBy = "privileges")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<Role> roles;
+    public Privilege(int privilegeId, String name) {
+        this.privilegeId = privilegeId;
+        this.name = name;
+    }
 
     public Privilege() {
     }
 
-    public Privilege(String name, List<Role> roles) {
-        this.name = name;
-        this.roles = roles;
+    public int getPrivilegeId() {
+        return privilegeId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setPrivilegeId(int privilegeId) {
+        this.privilegeId = privilegeId;
     }
 
     public String getName() {
@@ -42,13 +38,5 @@ public class Privilege {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
     }
 }
