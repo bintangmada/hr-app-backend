@@ -9,4 +9,5 @@ public interface RegionRepository extends JpaRepository<Region, Integer> {
 
     @Query(value = "SELECT * FROM REGIONS WHERE LOWER(TRIM(REGION_NAME) = LOWER(TRIM(:regionName)))", nativeQuery = true)
     Region findRegionByRegionName(@Param("regionName") String regionName);
+
 }
