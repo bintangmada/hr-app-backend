@@ -6,72 +6,71 @@ import com.hr_app.hr_app_backend.payload.request.RegionDtoRequest;
 import com.hr_app.hr_app_backend.payload.response.ApiResponse;
 import com.hr_app.hr_app_backend.repository.RegionRepository;
 import com.hr_app.hr_app_backend.service.RegionService;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class RegionServiceImpl implements RegionService {
 
+    @Autowired
     private RegionRepository regionRepository;
 
-    @Autowired
-    public RegionServiceImpl(RegionRepository regionRepository){
-        this.regionRepository = regionRepository;
-    }
-
-    public ApiResponse<RegionDtoRequest> createOneRegion(RegionDtoRequest regionDtoRequest){
-
-        Region existingRegion = regionRepository.findRegionByRegionName(regionDtoRequest.getRegionName());
-        ApiResponse apiResponse = new ApiResponse();
-
-        if(existingRegion != null){
-            apiResponse.setStatus(false);
-            apiResponse.setMessage("Region dengan nama : "+regionDtoRequest.getRegionName()+" sudah ada di database");
-            apiResponse.setData(null);
-            return apiResponse;
+    @Override
+    public ApiResponse<RegionDtoRequest> createOneRegion(RegionDtoRequest regionDto) {
+        Region existingRegion = regionRepository.findRegionByRegionName(regionDto.getRegionName());
+        if (existingRegion != null){
+            throw new EntityExistsException("Region telah terdaftar");
         }
+        Region region = mapRegionDtoToRegionEntity(regionDto);
+        Region savedRegion = regionRepository.save(region);
 
-        Region regionEntity = mapRegionRequestToRegionEntity(regionDtoRequest);
-        Region savedRegionEntity = regionRepository.save(regionEntity);
-        RegionDtoRequest regionDtoRequestt = mapRegionEntityToRegionDtoRequest(savedRegionEntity);
-        apiResponse.setStatus(true);
-        apiResponse.setMessage("Region dengan nama : "+regionDtoRequest.getRegionName()+" berhasil dibuat");
-        apiResponse.setData(regionDtoRequestt);
-
+        RegionDtoRequest regionDtoRequest = mapRegionEntityToRegionDto(savedRegion);
+        ApiResponse<RegionDtoRequest> apiResponse = new ApiResponse<>();
+        apiResponse.setData(regionDtoRequest);
+        apiResponse.setMessage("REGION BERHASIL DIBUAT");
+        apiResponse.setCode(HttpStatus.CREATED);
+        apiResponse.setTimeStamp(LocalDateTime.now());
+        apiResponse.setStatus("SUCCESS");
         return apiResponse;
     }
 
-    public List<RegionDto> getAllRegions(){
+    @Override
+    public ApiResponse<List<RegionDto>> getAllRegions() {
         return null;
     }
 
-    public RegionDto getOneRegion(int regionId){
+    @Override
+    public ApiResponse<RegionDto> getOneRegion(int regionId) {
         return null;
     }
 
-    public RegionDto updateOneRegion(int regionId, RegionDto regionDto){
+    @Override
+    public ApiResponse<RegionDto> updateOneRegion(int regionId, RegionDto regionDto) {
         return null;
     }
 
-    public void deleteOneRegion(int regionId){
-
+    @Override
+    public ApiResponse<String> deleteOneRegion(int regionId) {
+        return null;
     }
 
-    // Map region dto request to region entity
-    Region mapRegionRequestToRegionEntity(RegionDtoRequest regionDtoRequest){
-        Region regionEntity = new Region();
-        regionEntity.setRegionName(regionDtoRequest.getRegionName());
-        return regionEntity;
+    private Region mapRegionDtoToRegionEntity(RegionDtoRequest regionDto){
+        Region region = new Region();
+        region.setRegionName(regionDto.getRegionName());
+        return region;
     }
 
-    // Map region dto entity to region dto request
-    RegionDtoRequest mapRegionEntityToRegionDtoRequest(Region regionEntity){
-        RegionDtoRequest regionDtoRequest = new RegionDtoRequest();
-        regionDtoRequest.setRegionId(regionEntity.getRegionId());
-        regionDtoRequest.setRegionName(regionEntity.getRegionName());
-        return regionDtoRequest;
+    private RegionDtoRequest mapRegionEntityToRegionDto(Region region){
+        RegionDtoRequest dto = new RegionDtoRequest();
+        dto.setRegionId(region.getRegionId());
+        dto.setRegionName(region.getRegionName());
+        return dto;
     }
 }

@@ -20,4 +20,12 @@ public class RegionDtoRequest {
     public void setRegionName(String regionName) {
         this.regionName = regionName;
     }
+
+    public RegionDtoRequest(int regionId, String regionName) {
+        this.regionId = regionId;
+        this.regionName = regionName;
+    }
+
+    public RegionDtoRequest() {
+    }
 }

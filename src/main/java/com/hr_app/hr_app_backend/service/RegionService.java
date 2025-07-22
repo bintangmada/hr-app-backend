@@ -9,12 +9,12 @@ import java.util.List;
 public interface RegionService {
 
     ApiResponse<RegionDtoRequest> createOneRegion(RegionDtoRequest regionDtoRequest);
-    List<RegionDto> getAllRegions();
+    ApiResponse<List<RegionDto>> getAllRegions();
 
-    RegionDto getOneRegion(int regionId);
+    ApiResponse<RegionDto> getOneRegion(int regionId);
 
-    RegionDto updateOneRegion(int regionId, RegionDto regionDto);
+    ApiResponse<RegionDto> updateOneRegion(int regionId, RegionDto regionDto);
 
-    void deleteOneRegion(int regionId);
+    ApiResponse<String> deleteOneRegion(int regionId);
 
 }

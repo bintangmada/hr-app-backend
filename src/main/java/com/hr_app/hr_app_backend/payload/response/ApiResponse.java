@@ -1,17 +1,20 @@
 package com.hr_app.hr_app_backend.payload.response;
 
+import org.springframework.http.HttpStatus;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class ApiResponse<T> {
 
     private String status;
-    private int code;
+    private HttpStatus code;
     private String message;
-    private String timeStamp;
+    private LocalDateTime timeStamp;
     private T data;
 
-    public ApiResponse(String status, int code, String message, String timeStamp, T data) {
+    public ApiResponse(String status, HttpStatus code, String message, LocalDateTime timeStamp, T data) {
         this.status = status;
         this.code = code;
         this.message = message;
@@ -30,11 +33,11 @@ public class ApiResponse<T> {
         this.status = status;
     }
 
-    public int getCode() {
+    public HttpStatus getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(HttpStatus code) {
         this.code = code;
     }
 
@@ -46,11 +49,11 @@ public class ApiResponse<T> {
         this.message = message;
     }
 
-    public String getTimeStamp() {
+    public LocalDateTime getTimeStamp() {
         return timeStamp;
     }
 
-    public void setTimeStamp(String timeStamp) {
+    public void setTimeStamp(LocalDateTime timeStamp) {
         this.timeStamp = timeStamp;
     }
 
