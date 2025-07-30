@@ -28,8 +28,8 @@ public class RegionController {
         return new ResponseEntity<>(regionCreated, HttpStatus.CREATED);
     }
 
-//    @GetMapping()
-//    public List<RegionDto> getAllRegions(){
-//        return regionService.getAllRegions();
-//    }
+    @GetMapping()
+    public ApiResponse<List<RegionDtoRequest>> getAllRegions(){
+        return regionService.getAllRegions();
+    }
 }

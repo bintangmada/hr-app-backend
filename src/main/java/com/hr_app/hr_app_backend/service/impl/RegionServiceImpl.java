@@ -24,53 +24,83 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public ApiResponse<RegionDtoRequest> createOneRegion(RegionDtoRequest regionDto) {
-        Region existingRegion = regionRepository.findRegionByRegionName(regionDto.getRegionName());
-        if (existingRegion != null){
+        Region existingRegion = regionRepository.findRegionByRegionName(regionDto.getRegionName().toLowerCase());
+
+        if (existingRegion != null) {
             throw new EntityExistsException("Region telah terdaftar");
         }
+
         Region region = mapRegionDtoToRegionEntity(regionDto);
         Region savedRegion = regionRepository.save(region);
-
         RegionDtoRequest regionDtoRequest = mapRegionEntityToRegionDto(savedRegion);
-        ApiResponse<RegionDtoRequest> apiResponse = new ApiResponse<>();
-        apiResponse.setData(regionDtoRequest);
-        apiResponse.setMessage("REGION BERHASIL DIBUAT");
-        apiResponse.setCode(HttpStatus.CREATED);
-        apiResponse.setTimeStamp(LocalDateTime.now());
-        apiResponse.setStatus("SUCCESS");
-        return apiResponse;
+
+        return buildSuccessResponse(
+                regionDtoRequest,
+                "REGION BERHASIL DIBUAT",
+                HttpStatus.CREATED
+        );
     }
 
     @Override
-    public ApiResponse<List<RegionDto>> getAllRegions() {
-        return null;
+    public ApiResponse<List<RegionDtoRequest>> getAllRegions() {
+        List<Region> regions = regionRepository.findAll();
+        List<RegionDtoRequest> regionDtos = new ArrayList<>();
+
+        for (Region region : regions) {
+            regionDtos.add(mapRegionEntityToRegionDto(region));
+        }
+
+        return buildSuccessResponse(
+                regionDtos,
+                "Berhasil mengambil semua data region",
+                HttpStatus.OK
+        );
     }
 
     @Override
     public ApiResponse<RegionDto> getOneRegion(int regionId) {
+        // TODO: implement
         return null;
     }
 
     @Override
     public ApiResponse<RegionDto> updateOneRegion(int regionId, RegionDto regionDto) {
+        // TODO: implement
         return null;
     }
 
     @Override
     public ApiResponse<String> deleteOneRegion(int regionId) {
+        // TODO: implement
         return null;
     }
 
-    private Region mapRegionDtoToRegionEntity(RegionDtoRequest regionDto){
+    // === Mapping Methods ===
+
+    private Region mapRegionDtoToRegionEntity(RegionDtoRequest dto) {
         Region region = new Region();
-        region.setRegionName(regionDto.getRegionName());
+        region.setRegionName(dto.getRegionName());
         return region;
     }
 
-    private RegionDtoRequest mapRegionEntityToRegionDto(Region region){
+    private RegionDtoRequest mapRegionEntityToRegionDto(Region region) {
         RegionDtoRequest dto = new RegionDtoRequest();
         dto.setRegionId(region.getRegionId());
         dto.setRegionName(region.getRegionName());
         return dto;
     }
+
+    // === Utility Response Builder ===
+
+    private <T> ApiResponse<T> buildSuccessResponse(T data, String message, HttpStatus status) {
+        ApiResponse<T> response = new ApiResponse<>();
+        response.setStatus("SUCCESS");
+        response.setCode(status);
+        response.setMessage(message);
+        response.setTimeStamp(LocalDateTime.now());
+        response.setData(data);
+        return response;
+    }
+
+
 }
